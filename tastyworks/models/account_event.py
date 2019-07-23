@@ -49,13 +49,16 @@ class AccountEvent(object):
 
     @classmethod
     def from_dict(cls, input_dict:dict) -> AccountEventType:
+        input_dict = {k.replace("-","_"): v for k,v in input_dict.items()}
         return cls.detect_type(input_dict)(**input_dict)
 
 @dataclass
 class ActionAccountEvent(AccountEvent):
     action: str
     action_enum: ActionAccountEventType = field(init=False, repr=False)
-    message: str
+    request_id: str = None
+    auth_token: str = None
+    message: str = None
     value: List[str] = None
 
     def __post_init__(self):

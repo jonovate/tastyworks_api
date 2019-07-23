@@ -42,10 +42,10 @@ class AccountStreamer(object):
 
     def __get_action_msg(self, action, value=None, request_id=None) -> List:
         msg = {
-                "action":action,
-                "request-id":request_id,
-                "auth-token":self.tasty_session.session_token,
-            }
+            "action": action,
+            "request-id": request_id,
+            "auth-token": self.tasty_session.session_token,
+        }
         if value:
             msg["value"] = value
 
@@ -105,7 +105,7 @@ class AccountStreamer(object):
         while True:
             LOGGER.debug('Sending keep-alive message')
             await self._send_msg(self._get_heartbeat_msg())
-            await asyncio.sleep(period / 1000)
+            await asyncio.sleep(period / 5000)
 
     async def listen(self):
         async for msg in self.connection:
